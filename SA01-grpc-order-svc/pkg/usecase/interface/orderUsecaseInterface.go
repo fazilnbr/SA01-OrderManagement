@@ -7,5 +7,5 @@ import (
 )
 
 type OrderUseCase interface {
-	CreateOrder(ctx context.Context, order domain.RecOrder) (int, error)
+	CreateOrder(ctx context.Context, order domain.RecOrder) (string, error)
 }

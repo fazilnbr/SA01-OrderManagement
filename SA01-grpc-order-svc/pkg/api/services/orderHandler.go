@@ -14,15 +14,22 @@ type OrderService struct {
 }
 
 // CreateOrder implements pb.OrderServiceServer
-func (*OrderService) CreateOrder(context.Context, *pb.CreateOrderRequest) (*pb.CreateOrderResponse, error) {
-	panic("unimplemented")
-}
+func (c *OrderService) CreateOrder(ctx context.Context, req *pb.CreateOrderRequest) (*pb.CreateOrderResponse, error) {
 
-func (c *OrderService) GetCart(ctx context.Context, req *pb.CreateOrderRequest) (*pb.CreateOrderResponse, error) {
+	items := make([]domain.Item, 0, len(req.Item))
+	for _, item := range req.Item {
+		items = append(items, domain.Item{
+			ID:          item.ID,
+			Description: item.Description,
+			Price:       float64(item.Price),
+			Quantity:    int(item.Quantity),
+		})
+	}
 
 	order := domain.RecOrder{
 		ID:           req.UserId,
 		Status:       req.Status,
+		Item:         items,
 		Total:        float64(req.Total),
 		CurrencyUnit: req.CurrencyUnit,
 	}
@@ -38,7 +45,7 @@ func (c *OrderService) GetCart(ctx context.Context, req *pb.CreateOrderRequest) 
 
 	return &pb.CreateOrderResponse{
 		Status: http.StatusOK,
-		Id:     int64(id),
+		Id:     id,
 	}, nil
 
 }
