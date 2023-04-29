@@ -40,5 +40,5 @@ func NewServerHTTP(orderService *services.OrderService) *ServerHTTP {
 }
 
 func (sh *ServerHTTP) Start() {
-	sh.engine.Run(":8002")
+	sh.engine.Run(":9090")
 }
