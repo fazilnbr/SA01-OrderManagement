@@ -3,14 +3,14 @@ package order;
 
 option go_package = "./pkg/order/pb";
 
-service CartService {
+service OrderService {
   rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {}
 }
 
 // AddOrder
 
 message CreateOrderRequest {
-  int64 userId =1 ;
+  string userId =1 ;
   string Status =2 ;
   repeated Item Item =3;
   float Total =4 ;

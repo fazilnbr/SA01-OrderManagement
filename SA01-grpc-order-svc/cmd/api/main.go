@@ -20,6 +20,7 @@ func main() {
 		log.Fatal("cannot start server: ", diErr)
 	} else {
 		server.Start()
+
 	}
 
 }

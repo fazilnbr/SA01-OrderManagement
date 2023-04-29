@@ -2,7 +2,6 @@ package routes
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/pkg/domain"
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/pkg/order/pb"
@@ -19,7 +18,7 @@ import (
 // @Success 200 {object} response.Response{}
 // @Failure 422 {object} response.Response{}
 // @Router /order/items [post]
-func CreateOrder(ctx *gin.Context, c pb.CartServiceClient) {
+func CreateOrder(ctx *gin.Context, c pb.OrderServiceClient) {
 	body := domain.Order{}
 
 	if err := ctx.BindJSON(&body); err != nil {
@@ -27,7 +26,7 @@ func CreateOrder(ctx *gin.Context, c pb.CartServiceClient) {
 		return
 	}
 
-	id, _ := strconv.Atoi(ctx.Writer.Header().Get("userId"))
+	id := ctx.Writer.Header().Get("userId")
 
 	// var pbItem []pb.Item
 	// for _, c := range body.Item {
@@ -40,7 +39,7 @@ func CreateOrder(ctx *gin.Context, c pb.CartServiceClient) {
 	// }
 
 	res, err := c.CreateOrder(ctx, &pb.CreateOrderRequest{
-		UserId:       int64(id),
+		UserId:       id,
 		Status:       body.Status,
 		Total:        float32(body.Total),
 		CurrencyUnit: body.CurrencyUnit,

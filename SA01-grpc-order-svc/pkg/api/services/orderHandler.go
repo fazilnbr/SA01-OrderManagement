@@ -13,6 +13,11 @@ type OrderService struct {
 	orderUseCase usecase.OrderUseCase
 }
 
+// CreateOrder implements pb.OrderServiceServer
+func (*OrderService) CreateOrder(context.Context, *pb.CreateOrderRequest) (*pb.CreateOrderResponse, error) {
+	panic("unimplemented")
+}
+
 func (c *OrderService) GetCart(ctx context.Context, req *pb.CreateOrderRequest) (*pb.CreateOrderResponse, error) {
 
 	order := domain.RecOrder{

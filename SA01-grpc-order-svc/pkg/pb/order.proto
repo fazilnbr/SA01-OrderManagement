@@ -3,7 +3,7 @@ package order;
 
 option go_package = "./pkg/pb";
 
-service CartService {
+service OrderService {
   rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {}
 }
 
