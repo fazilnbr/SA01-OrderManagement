@@ -28,19 +28,21 @@ func CreateOrder(ctx *gin.Context, c pb.OrderServiceClient) {
 
 	id := ctx.Writer.Header().Get("userId")
 
-	// var pbItem []pb.Item
-	// for _, c := range body.Item {
-	// 	pbItem = append(pbItem, pb.Item{
-	// 		ID:          c.ID,
-	// 		Description: c.Description,
-	// 		Price:       float32(c.Price),
-	// 		Quantity:    int64(c.Quantity),
-	// 	})
-	// }
+	items := make([]*pb.Item, 0, len(body.Item))
+	for _, pbItem := range body.Item {
+		item := &pb.Item{
+			ID:          pbItem.ID,
+			Description: pbItem.Description,
+			Price:       float32(pbItem.Price),
+			Quantity:    int64(pbItem.Quantity),
+		}
+		items = append(items, item)
+	}
 
 	res, err := c.CreateOrder(ctx, &pb.CreateOrderRequest{
 		UserId:       id,
 		Status:       body.Status,
+		Item:         items,
 		Total:        float32(body.Total),
 		CurrencyUnit: body.CurrencyUnit,
 	})

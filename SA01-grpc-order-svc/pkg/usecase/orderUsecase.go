@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"strings"
 
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/domain"
 	repository "github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/repository/interface"
@@ -24,10 +25,11 @@ func (o *orderUseCase) CreateOrder(ctx context.Context, order domain.RecOrder) (
 		}
 		it = append(it, id)
 	}
+	itemIDs := strings.Join(it, ",")
 	od := domain.Order{
 		ID:           order.ID,
 		Status:       order.Status,
-		Item_id:      it,
+		Item_id:      itemIDs,
 		Total:        order.Total,
 		CurrencyUnit: order.CurrencyUnit,
 	}
