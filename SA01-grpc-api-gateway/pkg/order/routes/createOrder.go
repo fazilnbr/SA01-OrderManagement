@@ -28,8 +28,22 @@ func CreateOrder(ctx *gin.Context, c pb.CartServiceClient) {
 	}
 
 	id, _ := strconv.Atoi(ctx.Writer.Header().Get("userId"))
-	res, err := c.CreateOrder(ctx, &pb.AddOrderRequest{
-		UserId: int64(id),
+
+	// var pbItem []pb.Item
+	// for _, c := range body.Item {
+	// 	pbItem = append(pbItem, pb.Item{
+	// 		ID:          c.ID,
+	// 		Description: c.Description,
+	// 		Price:       float32(c.Price),
+	// 		Quantity:    int64(c.Quantity),
+	// 	})
+	// }
+
+	res, err := c.CreateOrder(ctx, &pb.CreateOrderRequest{
+		UserId:       int64(id),
+		Status:       body.Status,
+		Total:        float32(body.Total),
+		CurrencyUnit: body.CurrencyUnit,
 	})
 
 	if err != nil {
