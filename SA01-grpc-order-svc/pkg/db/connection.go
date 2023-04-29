@@ -26,6 +26,7 @@ func ConnectDatabase(cfg config.Config) (*gorm.DB, error) {
 
 	db.AutoMigrate(
 		domain.Order{},
+		domain.Item{},
 	)
 
 
