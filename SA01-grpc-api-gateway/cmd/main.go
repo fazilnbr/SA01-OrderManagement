@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/pkg/config"
+	_"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/cmd/api/docs"
 	"github.com/gin-gonic/gin"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
