@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/pkg/config"
-	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/pkg/order/pb"
+	"github.com/fazilnbr/SA01-OrderManagement/pb"
 	"google.golang.org/grpc"
 )
 

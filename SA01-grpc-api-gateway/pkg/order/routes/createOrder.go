@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/pkg/domain"
-	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/pkg/order/pb"
+	"github.com/fazilnbr/SA01-OrderManagement/pb"
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/pkg/utils/response"
 	"github.com/gin-gonic/gin"
 )

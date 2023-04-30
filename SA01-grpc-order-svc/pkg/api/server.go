@@ -6,7 +6,7 @@ import (
 	"net"
 
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/api/services"
-	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/pb"
+	"github.com/fazilnbr/SA01-OrderManagement/pb"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
 )
@@ -24,7 +24,8 @@ func NewGRPCServer(orderService *services.OrderService, grpcPort string) *grpc.S
 
 	grpcServer := grpc.NewServer()
 
-	pb.RegisterOrderServiceServer(grpcServer, orderService)
+	pb.RegisterOrderServiceServer(grpcServer,orderService)
+	// pb.RegisterOrderServiceServer(grpcServer, orderService)
 
 	if err := grpcServer.Serve(lis); err != nil {
 		// log.Fatalf("failed to serve: %v", err).

@@ -5,12 +5,17 @@ import (
 	"net/http"
 
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/domain"
-	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/pb"
 	usecase "github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/usecase/interface"
+	"github.com/fazilnbr/SA01-OrderManagement/pb"
 )
 
 type OrderService struct {
 	orderUseCase usecase.OrderUseCase
+}
+
+// UpdateOrder implements pb.OrderServiceServer
+func (*OrderService) UpdateOrder(context.Context, *pb.UpdateOrderRequest) (*pb.UpdateOrderResponse, error) {
+	panic("unimplemented")
 }
 
 // CreateOrder implements pb.OrderServiceServer
