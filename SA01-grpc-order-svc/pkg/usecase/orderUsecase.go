@@ -13,6 +13,31 @@ type orderUseCase struct {
 	orderRepo repository.OrderRepository
 }
 
+// FetchOrder implements interfaces.OrderUseCase
+func (o *orderUseCase) FetchOrder(ctx context.Context, userid int) (domain.RecOrder, error) {
+	order, err := o.orderRepo.FetchOrder(ctx, userid)
+	if err != nil {
+		return domain.RecOrder{}, err
+	}
+	itemId := strings.Split(order.Item_id, ",")
+	items := []domain.Item{}
+	for _, itemid := range itemId {
+		item, err := o.orderRepo.FetchItem(ctx, itemid)
+		if err != nil {
+			return domain.RecOrder{}, err
+		}
+		items = append(items, item)
+	}
+	recorder := domain.RecOrder{
+		ID:           order.ID,
+		Status:       order.Status,
+		Item:         items,
+		Total:        order.Total,
+		CurrencyUnit: order.CurrencyUnit,
+	}
+	return recorder, err
+}
+
 // UpdateOrder implements interfaces.OrderUseCase
 func (o *orderUseCase) UpdateOrder(ctx context.Context, orderid string, status string) (string, error) {
 	id, err := o.orderRepo.UpdateOrder(ctx, orderid, status)

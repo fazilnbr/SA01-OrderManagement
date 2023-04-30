@@ -13,6 +13,21 @@ type orderDatabase struct {
 	DB *gorm.DB
 }
 
+// FetchItem implements interfaces.OrderRepository
+func (o *orderDatabase) FetchItem(ctx context.Context, itemid string) (domain.Item, error) {
+	item := domain.Item{}
+	err := o.DB.Find(&item).Error
+
+	return item, err
+}
+
+// FetchOrder implements interfaces.OrderRepository
+func (o *orderDatabase) FetchOrder(ctx context.Context, userid int) (domain.Order, error) {
+	order := domain.Order{}
+	err := o.DB.Find(&order).Error
+	return order, err
+}
+
 // UpdateOrder implements interfaces.OrderRepository
 func (o *orderDatabase) UpdateOrder(ctx context.Context, orderid string, status string) (string, error) {
 	order := domain.Order{}

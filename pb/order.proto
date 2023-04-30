@@ -60,7 +60,7 @@ message FetchOrderRequest {
 message FetchOrderResponse {
   int32 status = 1;
   string error = 2;
-  repeated Order orders = 3;
+  Order orders = 3;
 }
  
 message Order {
