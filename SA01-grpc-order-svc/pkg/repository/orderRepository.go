@@ -22,8 +22,8 @@ func (o *orderDatabase) FetchItem(ctx context.Context, itemid string) (domain.It
 }
 
 // FetchOrder implements interfaces.OrderRepository
-func (o *orderDatabase) FetchOrder(ctx context.Context, userid int) (domain.Order, error) {
-	order := domain.Order{}
+func (o *orderDatabase) FetchOrder(ctx context.Context, userid int) ([]domain.Order, error) {
+	order := []domain.Order{}
 	err := o.DB.Find(&order).Error
 	return order, err
 }

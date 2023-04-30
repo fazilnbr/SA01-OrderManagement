@@ -14,28 +14,35 @@ type orderUseCase struct {
 }
 
 // FetchOrder implements interfaces.OrderUseCase
-func (o *orderUseCase) FetchOrder(ctx context.Context, userid int) (domain.RecOrder, error) {
+func (o *orderUseCase) FetchOrder(ctx context.Context, userid int) ([]domain.RecOrder, error) {
 	order, err := o.orderRepo.FetchOrder(ctx, userid)
 	if err != nil {
-		return domain.RecOrder{}, err
+		return []domain.RecOrder{}, err
 	}
-	itemId := strings.Split(order.Item_id, ",")
-	items := []domain.Item{}
-	for _, itemid := range itemId {
-		item, err := o.orderRepo.FetchItem(ctx, itemid)
-		if err != nil {
-			return domain.RecOrder{}, err
+
+	Rorder := []domain.RecOrder{}
+	for _, od := range order {
+		itemId := strings.Split(od.Item_id, ",")
+		items := []domain.Item{}
+		for _, itemid := range itemId {
+			item, err := o.orderRepo.FetchItem(ctx, itemid)
+			if err != nil {
+				return []domain.RecOrder{}, err
+			}
+			items = append(items, item)
 		}
-		items = append(items, item)
+		recorder := domain.RecOrder{
+			ID:           od.ID,
+			Status:       od.Status,
+			Item:         items,
+			Total:        od.Total,
+			CurrencyUnit: od.CurrencyUnit,
+		}
+		Rorder = append(Rorder, recorder)
+
 	}
-	recorder := domain.RecOrder{
-		ID:           order.ID,
-		Status:       order.Status,
-		Item:         items,
-		Total:        order.Total,
-		CurrencyUnit: order.CurrencyUnit,
-	}
-	return recorder, err
+
+	return Rorder, err
 }
 
 // UpdateOrder implements interfaces.OrderUseCase
