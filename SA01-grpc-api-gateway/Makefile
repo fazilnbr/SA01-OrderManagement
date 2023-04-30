@@ -12,7 +12,7 @@ path:
 
 
 swag: ## Generate swagger2 docs
-	swag init -g pkg/auth/routes/register.go --parseDependency -o ./cmd/api/docs
+	swag init -g /pkg/order/routes/createOrder.go --parseDependency -o ./cmd/api/docs
 
 run: ## To run the api gateway
 	go run cmd/main.go
