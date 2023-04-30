@@ -17,7 +17,7 @@ import (
 // @Param orderdetials body domain.Order{} true "Order Detials"
 // @Success 200 {object} response.Response{}
 // @Failure 422 {object} response.Response{}
-// @Router /order/ [post]
+// @Router /order [post]
 func CreateOrder(ctx *gin.Context, c pb.OrderServiceClient) {
 	body := domain.Order{}
 

@@ -13,6 +13,11 @@ type OrderService struct {
 	orderUseCase usecase.OrderUseCase
 }
 
+// FetchOrder implements pb.OrderServiceServer
+func (*OrderService) FetchOrder(context.Context, *pb.FetchOrderRequest) (*pb.FetchOrderResponse, error) {
+	panic("unimplemented")
+}
+
 // UpdateOrder implements pb.OrderServiceServer
 func (c *OrderService) UpdateOrder(ctx context.Context, req *pb.UpdateOrderRequest) (*pb.UpdateOrderResponse, error) {
 	id, err := c.orderUseCase.UpdateOrder(ctx, req.OrderId, req.Status)
