@@ -14,8 +14,20 @@ type OrderService struct {
 }
 
 // UpdateOrder implements pb.OrderServiceServer
-func (*OrderService) UpdateOrder(context.Context, *pb.UpdateOrderRequest) (*pb.UpdateOrderResponse, error) {
-	panic("unimplemented")
+func (c *OrderService) UpdateOrder(ctx context.Context, req *pb.UpdateOrderRequest) (*pb.UpdateOrderResponse, error) {
+	id, err := c.orderUseCase.UpdateOrder(ctx, req.OrderId, req.Status)
+	if err != nil {
+		return &pb.UpdateOrderResponse{
+			Status: http.StatusUnprocessableEntity,
+			Error:  err.Error(),
+		}, err
+	}
+
+	return &pb.UpdateOrderResponse{
+		Status: http.StatusOK,
+		Id:     id,
+	}, nil
+
 }
 
 // CreateOrder implements pb.OrderServiceServer
@@ -32,7 +44,7 @@ func (c *OrderService) CreateOrder(ctx context.Context, req *pb.CreateOrderReque
 	}
 
 	order := domain.RecOrder{
-		ID:           req.UserId,
+		ID:           req.OrderId,
 		Status:       req.Status,
 		Item:         items,
 		Total:        float64(req.Total),

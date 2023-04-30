@@ -9,4 +9,5 @@ import (
 type OrderRepository interface {
 	CreateOrder(ctx context.Context, order domain.Order) (string, error)
 	CreateItem(ctx context.Context, item domain.Item) (string, error)
+	UpdateOrder(ctx context.Context, orderid, status string) (string, error)
 }

@@ -13,6 +13,12 @@ type orderUseCase struct {
 	orderRepo repository.OrderRepository
 }
 
+// UpdateOrder implements interfaces.OrderUseCase
+func (o *orderUseCase) UpdateOrder(ctx context.Context, orderid string, status string) (string, error) {
+	id, err := o.orderRepo.UpdateOrder(ctx, orderid, status)
+	return id, err
+}
+
 // CreateOrder implements interfaces.OrderUseCase
 func (o *orderUseCase) CreateOrder(ctx context.Context, order domain.RecOrder) (string, error) {
 	items := order.Item

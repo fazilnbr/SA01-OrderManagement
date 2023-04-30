@@ -13,6 +13,13 @@ type orderDatabase struct {
 	DB *gorm.DB
 }
 
+// UpdateOrder implements interfaces.OrderRepository
+func (o *orderDatabase) UpdateOrder(ctx context.Context, orderid string, status string) (string, error) {
+	order := domain.Order{}
+	err := o.DB.Model(&order).Where("id = ?", orderid).Update("status", status).Error
+	return orderid, err
+}
+
 // CreateItem implements interfaces.OrderRepository
 func (o *orderDatabase) CreateItem(ctx context.Context, item domain.Item) (string, error) {
 	err := o.DB.Create(&item).Error
