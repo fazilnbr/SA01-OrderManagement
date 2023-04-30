@@ -9,17 +9,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Summary Create Order
-// @ID createorder
+// @Summary Update Order
+// @ID Updateorder
 // @Tags Order
 // @Produce json
 // @Security BearerAuth
-// @Param orderdetials body domain.Order{} true "Order Detials"
+// @Param updateorderdetials body domain.UpdateOrder{} true "Update Order Detials"
 // @Success 200 {object} response.Response{}
 // @Failure 422 {object} response.Response{}
-// @Router /order/ [post]
-func CreateOrder(ctx *gin.Context, c pb.OrderServiceClient) {
-	body := domain.Order{}
+// @Router /order [put]
+func UpdateOrder(ctx *gin.Context, c pb.OrderServiceClient) {
+	body := domain.UpdateOrder{}
 
 	if err := ctx.BindJSON(&body); err != nil {
 		ctx.AbortWithError(http.StatusBadRequest, err)
@@ -28,28 +28,14 @@ func CreateOrder(ctx *gin.Context, c pb.OrderServiceClient) {
 
 	id := ctx.Writer.Header().Get("userId")
 
-	items := make([]*pb.Item, 0, len(body.Item))
-	for _, pbItem := range body.Item {
-		item := &pb.Item{
-			ID:          pbItem.ID,
-			Description: pbItem.Description,
-			Price:       float32(pbItem.Price),
-			Quantity:    int64(pbItem.Quantity),
-		}
-		items = append(items, item)
-	}
-
-	res, err := c.CreateOrder(ctx, &pb.CreateOrderRequest{
-		UserId:       id,
+	res, err := c.UpdateOrder(ctx, &pb.UpdateOrderRequest{
+		UserId: id,
 		OrderId: body.ID,
-		Status:       body.Status,
-		Item:         items,
-		Total:        float32(body.Total),
-		CurrencyUnit: body.CurrencyUnit,
+		Status: body.Status,
 	})
 
 	if err != nil {
-		responses := response.ErrorResponse("Failed to Create Order", err.Error(), nil)
+		responses := response.ErrorResponse("Failed to Update Order", err.Error(), nil)
 		ctx.Writer.Header().Set("Content-Type", "application/json")
 		ctx.Writer.WriteHeader(http.StatusBadRequest)
 		response.ResponseJSON(*ctx, responses)

@@ -12,14 +12,18 @@ func RegisterRoutes(r *gin.Engine, c *config.Config) *ServiceClient {
 		Client: InitServiceClient(c),
 	}
 
-	cart := r.Group("order")
+	order := r.Group("order")
 
-	// cart.Use(auth.AuthRequired)
-	cart.POST("/items", svc.CreateOrder)
+	// order.Use(auth.AuthRequired)
+	order.POST("/", svc.CreateOrder)
+	order.PUT("/",svc.UpdateOrder)
 
 	return svc
 }
 
 func (svc *ServiceClient) CreateOrder(ctx *gin.Context) {
 	routes.CreateOrder(ctx, svc.Client)
+}
+func (svc *ServiceClient) UpdateOrder(ctx *gin.Context) {
+	routes.UpdateOrder(ctx, svc.Client)
 }
