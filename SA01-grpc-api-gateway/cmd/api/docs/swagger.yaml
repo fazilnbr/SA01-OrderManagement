@@ -1,0 +1,116 @@
+definitions:
+  github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_domain.Item:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      price:
+        type: number
+      quantity:
+        type: integer
+    type: object
+  github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_domain.Order:
+    properties:
+      currencyUnit:
+        type: string
+      id:
+        type: string
+      items:
+        items:
+          $ref: '#/definitions/github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_domain.Item'
+        type: array
+      status:
+        type: string
+      total:
+        type: number
+    type: object
+  github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_domain.UpdateOrder:
+    properties:
+      id:
+        type: string
+      status:
+        type: string
+    type: object
+  github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_utils_response.Response:
+    properties:
+      data: {}
+      errors: {}
+      message:
+        type: string
+      status:
+        type: boolean
+    type: object
+info:
+  contact: {}
+paths:
+  /order:
+    get:
+      operationId: Fetchorder
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_utils_response.Response'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_utils_response.Response'
+      security:
+      - BearerAuth: []
+      summary: Fetch Order
+      tags:
+      - Order
+    post:
+      operationId: createorder
+      parameters:
+      - description: Order Detials
+        in: body
+        name: orderdetials
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_domain.Order'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_utils_response.Response'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_utils_response.Response'
+      security:
+      - BearerAuth: []
+      summary: Create Order
+      tags:
+      - Order
+    put:
+      operationId: Updateorder
+      parameters:
+      - description: Update Order Detials
+        in: body
+        name: updateorderdetials
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_domain.UpdateOrder'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_utils_response.Response'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_utils_response.Response'
+      security:
+      - BearerAuth: []
+      summary: Update Order
+      tags:
+      - Order
+swagger: "2.0"

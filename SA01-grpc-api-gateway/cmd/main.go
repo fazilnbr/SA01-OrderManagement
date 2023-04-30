@@ -4,6 +4,8 @@ import (
 	"log"
 
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/pkg/config"
+	_"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/cmd/api/docs"
+	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/pkg/order"
 	"github.com/gin-gonic/gin"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
@@ -21,6 +23,8 @@ func main() {
 
 	// Swagger docs
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+
+	order.RegisterRoutes(r,&cfg)
 
 	r.Run(cfg.Port)
 
