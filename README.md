@@ -18,9 +18,9 @@ https://github.com/fazilnbr/SA01-OrderManagement/tree/main/SA01-grpc-api-gateway
 $ make proto
 ```
 
-## Running the app
+## Refer The service Link to Running the Services
 
- Refer the service link
+ 
 
 ## Author
 
