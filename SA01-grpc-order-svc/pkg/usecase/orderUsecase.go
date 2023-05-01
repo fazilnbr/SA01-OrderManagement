@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"fmt"
 	"strings"
 
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/domain"
@@ -24,13 +25,15 @@ func (o *orderUseCase) FetchOrder(ctx context.Context, userid int) ([]domain.Rec
 	for _, od := range order {
 		itemId := strings.Split(od.Item_id, ",")
 		items := []domain.Item{}
-		for _, itemid := range itemId {
-			item, err := o.orderRepo.FetchItem(ctx, itemid)
+		for i, id := range itemId {
+			fmt.Println(i,id)
+			item, err := o.orderRepo.FetchItem(ctx, id)
 			if err != nil {
 				return []domain.RecOrder{}, err
 			}
 			items = append(items, item)
 		}
+		fmt.Println(items)
 		recorder := domain.RecOrder{
 			ID:           od.ID,
 			Status:       od.Status,
