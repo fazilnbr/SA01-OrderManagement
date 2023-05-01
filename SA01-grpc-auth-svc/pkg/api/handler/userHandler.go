@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/fazilnbr/SA01-OrderManagement/pb"
 	"github.com/fazilnbr/banking-grpc-auth-service/pkg/domain"
-	"github.com/fazilnbr/banking-grpc-auth-service/pkg/pb"
 	usecase "github.com/fazilnbr/banking-grpc-auth-service/pkg/usecase/interface"
 )
 
