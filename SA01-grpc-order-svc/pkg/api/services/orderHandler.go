@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/domain"
-	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/utils"
 	usecase "github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/usecase/interface"
+	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/utils"
 	"github.com/fazilnbr/SA01-OrderManagement/pb"
 )
 
@@ -24,12 +24,12 @@ func (c *OrderService) FetchOrder(ctx context.Context, req *pb.FetchOrderRequest
 		SortOrder: req.SortOrder,
 	}
 
-	pagnation :=utils.Filter{
-		Page: int(req.Filter.Page),
+	pagnation := utils.Filter{
+		Page:     int(req.Filter.Page),
 		PageSize: int(req.Filter.PageSize),
 	}
 
-	orders,_, err := c.orderUseCase.FetchOrder(ctx, int(req.UserId), filter,pagnation)
+	orders, Metadata, err := c.orderUseCase.FetchOrder(ctx, int(req.UserId), filter, pagnation)
 	if err != nil {
 		return &pb.FetchOrderResponse{
 			Status: http.StatusUnprocessableEntity,
@@ -62,6 +62,13 @@ func (c *OrderService) FetchOrder(ctx context.Context, req *pb.FetchOrderRequest
 	return &pb.FetchOrderResponse{
 		Status: http.StatusOK,
 		Orders: Od,
+		Metadata: &pb.Metadata{
+			CurrentPage:  int64(Metadata.CurrentPage),
+			PageSize:     int64(Metadata.PageSize),
+			FirstPage:    int64(Metadata.FirstPage),
+			LastPage:     int64(Metadata.LastPage),
+			TotalRecords: int64(Metadata.TotalRecords),
+		},
 	}, nil
 
 }

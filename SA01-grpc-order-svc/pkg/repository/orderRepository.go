@@ -48,13 +48,18 @@ func (o *orderDatabase) FetchOrder(ctx context.Context, userid int, filter domai
 			sql += " DESC"
 		}
 	}
+
+	sql += fmt.Sprintf(" LIMIT %v OFFSET %v", pagenation.Limit(), pagenation.Offset())
+
 	order := []domain.Order{}
-	err := o.DB.Raw(sql).Scan(&order).Error
+	var TotalRecords int64
+	err := o.DB.Raw(sql).Scan(&order).Count(&TotalRecords).Error
+
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = errors.New("no order in the list")
 	}
 
-	return order, utils.Metadata{}, err
+	return order, utils.ComputeMetaData(int(TotalRecords), pagenation.Page, pagenation.PageSize), err
 }
 
 // UpdateOrder implements interfaces.OrderRepository

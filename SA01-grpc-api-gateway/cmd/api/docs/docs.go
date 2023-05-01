@@ -198,6 +198,20 @@ const docTemplate = `{
                         "description": "Sort Order : ",
                         "name": "sortorder",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Page : ",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Pagesize : ",
+                        "name": "pagesize",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {

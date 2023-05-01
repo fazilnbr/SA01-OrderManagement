@@ -1,10 +1,9 @@
 package domain
 
 type Order struct {
-	ID      string `json:"id" gorm:"primaryKey;autoIncrement:true;unique"`
-	Status  string `json:"status"`
-	Item_id string `json:"items" `
-	// Item         *Item    `json:"-" gorm:"foreignKey:Item_id;references:ID"`
+	ID           string  `json:"id" gorm:"primaryKey;autoIncrement:true;unique"`
+	Status       string  `json:"status"`
+	Item_id      string  `json:"items" `
 	Total        float64 `json:"total"`
 	CurrencyUnit string  `json:"currencyUnit"`
 }

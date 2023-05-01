@@ -167,6 +167,16 @@ paths:
         in: query
         name: sortorder
         type: string
+      - description: 'Page : '
+        in: query
+        name: page
+        required: true
+        type: string
+      - description: 'Pagesize : '
+        in: query
+        name: pagesize
+        required: true
+        type: string
       produces:
       - application/json
       responses:
