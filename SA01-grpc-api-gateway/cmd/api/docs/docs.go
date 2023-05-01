@@ -33,13 +33,34 @@ const docTemplate = `{
                 "operationId": "Fetchorder",
                 "parameters": [
                     {
-                        "description": "Filter Detials",
-                        "name": "filterdetials",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_domain.Filter"
-                        }
+                        "type": "string",
+                        "description": "Status : ",
+                        "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Min Total : ",
+                        "name": "mintotal",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Max Total : ",
+                        "name": "maxtolat",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort By : ",
+                        "name": "sortby",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort Order : ",
+                        "name": "sortorder",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -140,26 +161,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_domain.Filter": {
-            "type": "object",
-            "properties": {
-                "maxtotal": {
-                    "type": "number"
-                },
-                "mintotal": {
-                    "type": "number"
-                },
-                "sortby": {
-                    "type": "string"
-                },
-                "sortorder": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "string"
-                }
-            }
-        },
         "github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_domain.Item": {
             "type": "object",
             "properties": {

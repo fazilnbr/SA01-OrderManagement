@@ -1,10 +1,10 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
-	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/pkg/domain"
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/pkg/utils/response"
 	"github.com/fazilnbr/SA01-OrderManagement/pb"
 	"github.com/gin-gonic/gin"
@@ -15,7 +15,11 @@ import (
 // @Tags Order
 // @Produce json
 // @Security BearerAuth
-// @Param filterdetials body domain.Filter{} true "Filter Detials"
+// @Param        status   query      string  false  "Status : "
+// @Param        mintotal   query      string  false  "Min Total : "
+// @Param        maxtolat   query      string  false  "Max Total : "
+// @Param        sortby   query      string  false  "Sort By : "
+// @Param        sortorder   query      string  false  "Sort Order : "
 // @Success 200 {object} response.Response{}
 // @Failure 422 {object} response.Response{}
 // @Router /order [get]
@@ -23,20 +27,22 @@ func FetchOrder(ctx *gin.Context, c pb.OrderServiceClient) {
 
 	id, _ := strconv.Atoi(ctx.Writer.Header().Get("userId"))
 
-	body := domain.Filter{}
-
-	if err := ctx.BindJSON(&body); err != nil {
-		ctx.AbortWithError(http.StatusBadRequest, err)
-		return
-	}
+	status, _ := ctx.Params.Get("status")
+	mintotal, _ := ctx.Params.Get("mintotal")
+	mintotl, _ := strconv.Atoi(mintotal)
+	maxtotal, _ := ctx.Params.Get("maxtolat")
+	maxtotl, _ := strconv.Atoi(maxtotal)
+	sortby, _ := ctx.Params.Get("sortby")
+	sortorder, _ := ctx.Params.Get("sortorder")
+	fmt.Println("here we are")
 
 	res, err := c.FetchOrder(ctx, &pb.FetchOrderRequest{
 		UserId:    int64(id),
-		Status:    body.Status,
-		MinTotal:  float32(body.MinTotal),
-		MaxTotal:  float32(body.MaxTotal),
-		SortBy:    body.SortBy,
-		SortOrder: body.SortOrder,
+		Status:    status,
+		MinTotal:  float32(mintotl),
+		MaxTotal:  float32(maxtotl),
+		SortBy:    sortby,
+		SortOrder: sortorder,
 	})
 
 	if err != nil {

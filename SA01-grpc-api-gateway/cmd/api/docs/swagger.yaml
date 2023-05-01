@@ -1,17 +1,4 @@
 definitions:
-  github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_domain.Filter:
-    properties:
-      maxtotal:
-        type: number
-      mintotal:
-        type: number
-      sortby:
-        type: string
-      sortorder:
-        type: string
-      status:
-        type: string
-    type: object
   github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_domain.Item:
     properties:
       description:
@@ -61,12 +48,26 @@ paths:
     get:
       operationId: Fetchorder
       parameters:
-      - description: Filter Detials
-        in: body
-        name: filterdetials
-        required: true
-        schema:
-          $ref: '#/definitions/github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_domain.Filter'
+      - description: 'Status : '
+        in: query
+        name: status
+        type: string
+      - description: 'Min Total : '
+        in: query
+        name: mintotal
+        type: string
+      - description: 'Max Total : '
+        in: query
+        name: maxtolat
+        type: string
+      - description: 'Sort By : '
+        in: query
+        name: sortby
+        type: string
+      - description: 'Sort Order : '
+        in: query
+        name: sortorder
+        type: string
       produces:
       - application/json
       responses:

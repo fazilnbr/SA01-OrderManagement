@@ -14,8 +14,8 @@ type orderUseCase struct {
 }
 
 // FetchOrder implements interfaces.OrderUseCase
-func (o *orderUseCase) FetchOrder(ctx context.Context, userid int,filter domain.Filter) ([]domain.RecOrder, error) {
-	order, err := o.orderRepo.FetchOrder(ctx, userid)
+func (o *orderUseCase) FetchOrder(ctx context.Context, userid int, filter domain.Filter) ([]domain.RecOrder, error) {
+	order, err := o.orderRepo.FetchOrder(ctx, userid, filter)
 	if err != nil {
 		return []domain.RecOrder{}, err
 	}
@@ -25,7 +25,7 @@ func (o *orderUseCase) FetchOrder(ctx context.Context, userid int,filter domain.
 		itemId := strings.Split(od.Item_id, ",")
 		items := []domain.Item{}
 		for _, id := range itemId {
-			item, err := o.orderRepo.FetchItem(ctx, id,filter)
+			item, err := o.orderRepo.FetchItem(ctx, id)
 			if err != nil {
 				return []domain.RecOrder{}, err
 			}
