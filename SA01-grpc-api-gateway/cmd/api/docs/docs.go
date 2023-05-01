@@ -31,6 +31,17 @@ const docTemplate = `{
                 ],
                 "summary": "Fetch Order",
                 "operationId": "Fetchorder",
+                "parameters": [
+                    {
+                        "description": "Filter Detials",
+                        "name": "filterdetials",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_domain.Filter"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -129,6 +140,26 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_domain.Filter": {
+            "type": "object",
+            "properties": {
+                "maxtotal": {
+                    "type": "number"
+                },
+                "mintotal": {
+                    "type": "number"
+                },
+                "sortby": {
+                    "type": "string"
+                },
+                "sortorder": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
         "github_com_fazilnbr_SA01-OrderManagement_SA01-grpc-api-gateway_pkg_domain.Item": {
             "type": "object",
             "properties": {

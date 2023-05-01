@@ -16,6 +16,14 @@ type Item struct {
 }
 
 type UpdateOrder struct {
-	ID           string  `json:"id" `
-	Status       string  `json:"status"`
+	ID     string `json:"id" `
+	Status string `json:"status"`
+}
+
+type Filter struct {
+	Status    string  `json:"status"`
+	MinTotal  float64 `json:"mintotal"`
+	MaxTotal  float64 `json:"maxtotal"`
+	SortBy    string  `json:"sortby"`
+	SortOrder string  `json:"sortorder"`
 }
