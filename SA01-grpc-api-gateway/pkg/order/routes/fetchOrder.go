@@ -27,14 +27,14 @@ func FetchOrder(ctx *gin.Context, c pb.OrderServiceClient) {
 
 	id, _ := strconv.Atoi(ctx.Writer.Header().Get("userId"))
 
-	status, _ := ctx.Params.Get("status")
-	mintotal, _ := ctx.Params.Get("mintotal")
+	status := ctx.Query("status")
+	mintotal := ctx.Query("mintotal")
 	mintotl, _ := strconv.Atoi(mintotal)
-	maxtotal, _ := ctx.Params.Get("maxtolat")
+	maxtotal := ctx.Query("maxtolat")
 	maxtotl, _ := strconv.Atoi(maxtotal)
-	sortby, _ := ctx.Params.Get("sortby")
-	sortorder, _ := ctx.Params.Get("sortorder")
-	fmt.Println("here we are")
+	sortby := ctx.Query("sortby")
+	sortorder := ctx.Query("sortorder")
+	fmt.Println("here", sortorder)
 
 	res, err := c.FetchOrder(ctx, &pb.FetchOrderRequest{
 		UserId:    int64(id),
