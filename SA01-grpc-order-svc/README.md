@@ -22,7 +22,7 @@ $ make proto
 
 ```bash
 # development
-$ make server
+$ make run
 ```
 
 ## Author

@@ -7,6 +7,7 @@ import (
 
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/domain"
 	interfaces "github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/repository/interface"
+	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/utils"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
@@ -29,7 +30,7 @@ func (o *orderDatabase) FetchItem(ctx context.Context, itemid string) (domain.It
 }
 
 // FetchOrder implements interfaces.OrderRepository
-func (o *orderDatabase) FetchOrder(ctx context.Context, userid int, filter domain.Filter) ([]domain.Order, error) {
+func (o *orderDatabase) FetchOrder(ctx context.Context, userid int, filter domain.Filter, pagenation utils.Filter) ([]domain.Order, utils.Metadata, error) {
 
 	sql := "SELECT * FROM orders WHERE 1=1"
 	if filter.Status != "" {
@@ -47,13 +48,18 @@ func (o *orderDatabase) FetchOrder(ctx context.Context, userid int, filter domai
 			sql += " DESC"
 		}
 	}
+
+	sql += fmt.Sprintf(" LIMIT %v OFFSET %v", pagenation.Limit(), pagenation.Offset())
+
 	order := []domain.Order{}
-	err := o.DB.Raw(sql).Scan(&order).Error
+	var TotalRecords int64
+	err := o.DB.Raw(sql).Scan(&order).Count(&TotalRecords).Error
+
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = errors.New("no order in the list")
 	}
 
-	return order, err
+	return order, utils.ComputeMetaData(int(TotalRecords), pagenation.Page, pagenation.PageSize), err
 }
 
 // UpdateOrder implements interfaces.OrderRepository
