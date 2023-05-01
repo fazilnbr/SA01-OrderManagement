@@ -9,6 +9,7 @@ import (
 	reflect "reflect"
 
 	domain "github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/domain"
+	utils "github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/utils"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -81,18 +82,19 @@ func (mr *MockOrderRepositoryMockRecorder) FetchItem(ctx, itemid interface{}) *g
 }
 
 // FetchOrder mocks base method.
-func (m *MockOrderRepository) FetchOrder(ctx context.Context, userid int, filter domain.Filter) ([]domain.Order, error) {
+func (m *MockOrderRepository) FetchOrder(ctx context.Context, userid int, filter domain.Filter, pagenation utils.Filter) ([]domain.Order, utils.Metadata, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FetchOrder", ctx, userid, filter)
+	ret := m.ctrl.Call(m, "FetchOrder", ctx, userid, filter, pagenation)
 	ret0, _ := ret[0].([]domain.Order)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret1, _ := ret[1].(utils.Metadata)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
 }
 
 // FetchOrder indicates an expected call of FetchOrder.
-func (mr *MockOrderRepositoryMockRecorder) FetchOrder(ctx, userid, filter interface{}) *gomock.Call {
+func (mr *MockOrderRepositoryMockRecorder) FetchOrder(ctx, userid, filter, pagenation interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchOrder", reflect.TypeOf((*MockOrderRepository)(nil).FetchOrder), ctx, userid, filter)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchOrder", reflect.TypeOf((*MockOrderRepository)(nil).FetchOrder), ctx, userid, filter, pagenation)
 }
 
 // UpdateOrder mocks base method.

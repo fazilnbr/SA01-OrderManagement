@@ -9,6 +9,7 @@ import (
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/domain"
 	repository "github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/repository/interface"
 	interfaces "github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/usecase/interface"
+	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/utils"
 )
 
 type orderUseCase struct {
@@ -16,10 +17,10 @@ type orderUseCase struct {
 }
 
 // FetchOrder implements interfaces.OrderUseCase
-func (o *orderUseCase) FetchOrder(ctx context.Context, userid int, filter domain.Filter) ([]domain.RecOrder, error) {
-	order, err := o.orderRepo.FetchOrder(ctx, userid, filter)
+func (o *orderUseCase) FetchOrder(ctx context.Context, userid int, filter domain.Filter, pagenation utils.Filter) ([]domain.RecOrder, utils.Metadata, error) {
+	order, metadata, err := o.orderRepo.FetchOrder(ctx, userid, filter, pagenation)
 	if err != nil {
-		return []domain.RecOrder{}, err
+		return []domain.RecOrder{}, metadata, err
 	}
 
 	Rorder := []domain.RecOrder{}
@@ -29,7 +30,7 @@ func (o *orderUseCase) FetchOrder(ctx context.Context, userid int, filter domain
 		for _, id := range itemId {
 			item, err := o.orderRepo.FetchItem(ctx, id)
 			if err != nil {
-				return []domain.RecOrder{}, err
+				return []domain.RecOrder{}, metadata, err
 			}
 			items = append(items, item)
 		}
@@ -44,7 +45,7 @@ func (o *orderUseCase) FetchOrder(ctx context.Context, userid int, filter domain
 
 	}
 
-	return Rorder, err
+	return Rorder, metadata, err
 }
 
 // UpdateOrder implements interfaces.OrderUseCase

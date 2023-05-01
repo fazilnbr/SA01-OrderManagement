@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/domain"
+	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/utils"
 	usecase "github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/usecase/interface"
 	"github.com/fazilnbr/SA01-OrderManagement/pb"
 )
@@ -22,7 +23,13 @@ func (c *OrderService) FetchOrder(ctx context.Context, req *pb.FetchOrderRequest
 		SortBy:    req.SortBy,
 		SortOrder: req.SortOrder,
 	}
-	orders, err := c.orderUseCase.FetchOrder(ctx, int(req.UserId), filter)
+
+	pagnation :=utils.Filter{
+		Page: int(req.Filter.Page),
+		PageSize: int(req.Filter.PageSize),
+	}
+
+	orders,_, err := c.orderUseCase.FetchOrder(ctx, int(req.UserId), filter,pagnation)
 	if err != nil {
 		return &pb.FetchOrderResponse{
 			Status: http.StatusUnprocessableEntity,

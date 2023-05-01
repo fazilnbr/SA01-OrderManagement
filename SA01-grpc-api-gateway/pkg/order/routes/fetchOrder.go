@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -20,6 +19,8 @@ import (
 // @Param        maxtolat   query      string  false  "Max Total : "
 // @Param        sortby   query      string  false  "Sort By : "
 // @Param        sortorder   query      string  false  "Sort Order : "
+// @Param        page   query      string  true  "Page : "
+// @Param        pagesize   query      string  true  "Pagesize : "
 // @Success 200 {object} response.Response{}
 // @Failure 422 {object} response.Response{}
 // @Router /order [get]
@@ -34,7 +35,11 @@ func FetchOrder(ctx *gin.Context, c pb.OrderServiceClient) {
 	maxtotl, _ := strconv.Atoi(maxtotal)
 	sortby := ctx.Query("sortby")
 	sortorder := ctx.Query("sortorder")
-	fmt.Println("here", sortorder)
+
+	p := ctx.Query("page")
+	page, _ := strconv.Atoi(p)
+	ps := ctx.Query("pagesize")
+	pagesize, _ := strconv.Atoi(ps)
 
 	res, err := c.FetchOrder(ctx, &pb.FetchOrderRequest{
 		UserId:    int64(id),
@@ -43,6 +48,10 @@ func FetchOrder(ctx *gin.Context, c pb.OrderServiceClient) {
 		MaxTotal:  float32(maxtotl),
 		SortBy:    sortby,
 		SortOrder: sortorder,
+		Filter: &pb.Filter{
+			Page:     int64(page),
+			PageSize: int64(pagesize),
+		},
 	})
 
 	if err != nil {
