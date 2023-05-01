@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/domain"
@@ -19,6 +20,10 @@ func (o *orderDatabase) FetchItem(ctx context.Context, itemid string) (domain.It
 
 	item := domain.Item{}
 	err := o.DB.Where("id = ?", itemid).First(&item).Error
+
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		err = errors.New("no item in the list")
+	}
 
 	return item, err
 }
@@ -44,6 +49,10 @@ func (o *orderDatabase) FetchOrder(ctx context.Context, userid int, filter domai
 	}
 	order := []domain.Order{}
 	err := o.DB.Raw(sql).Scan(&order).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		err = errors.New("no order in the list")
+	}
+
 	return order, err
 }
 
