@@ -10,7 +10,7 @@ https://github.com/fazilnbr/SA01-OrderManagement/tree/main/SA01-grpc-order-svc  
 
 https://github.com/fazilnbr/SA01-OrderManagement/tree/main/SA01-grpc-auth-svc    - Authentication Service (gRPC)
 
-https://github.com/fazilnbr/SA01-OrderManagement - API Gateway (HTTP)
+https://github.com/fazilnbr/SA01-OrderManagement/tree/main/SA01-grpc-api-gateway - API Gateway (HTTP)
 
 ## Installation
 
