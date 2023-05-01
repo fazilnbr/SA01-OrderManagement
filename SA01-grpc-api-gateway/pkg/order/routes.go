@@ -1,20 +1,21 @@
 package order
 
 import (
+	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/pkg/auth"
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/pkg/config"
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-api-gateway/pkg/order/routes"
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterRoutes(r *gin.Engine, c *config.Config) *ServiceClient {
-	// auth := auth.InitAuthMiddleware(authSvc)
+func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient) *ServiceClient {
+	auth := auth.InitAuthMiddleware(authSvc)
 	svc := &ServiceClient{
 		Client: InitServiceClient(c),
 	}
 
 	order := r.Group("order")
 
-	// order.Use(auth.AuthRequired)
+	order.Use(auth.AuthRequired)
 	order.POST("/", svc.CreateOrder)
 	order.PUT("/", svc.UpdateOrder)
 	order.GET("/", svc.FetchOrder)
