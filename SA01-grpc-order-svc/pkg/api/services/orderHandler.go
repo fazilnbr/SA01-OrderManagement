@@ -15,7 +15,14 @@ type OrderService struct {
 
 // FetchOrder implements pb.OrderServiceServer
 func (c *OrderService) FetchOrder(ctx context.Context, req *pb.FetchOrderRequest) (*pb.FetchOrderResponse, error) {
-	orders, err := c.orderUseCase.FetchOrder(ctx, int(req.UserId))
+	filter := domain.Filter{
+		Status:    req.Status,
+		MinTotal:  float64(req.MinTotal),
+		MaxTotal:  float64(req.MaxTotal),
+		SortBy:    req.SortBy,
+		SortOrder: req.SortOrder,
+	}
+	orders, err := c.orderUseCase.FetchOrder(ctx, int(req.UserId), filter)
 	if err != nil {
 		return &pb.FetchOrderResponse{
 			Status: http.StatusUnprocessableEntity,

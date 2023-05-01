@@ -47,6 +47,27 @@ paths:
   /order:
     get:
       operationId: Fetchorder
+      parameters:
+      - description: 'Status : '
+        in: query
+        name: status
+        type: string
+      - description: 'Min Total : '
+        in: query
+        name: mintotal
+        type: string
+      - description: 'Max Total : '
+        in: query
+        name: maxtolat
+        type: string
+      - description: 'Sort By : '
+        in: query
+        name: sortby
+        type: string
+      - description: 'Sort Order : '
+        in: query
+        name: sortorder
+        type: string
       produces:
       - application/json
       responses:

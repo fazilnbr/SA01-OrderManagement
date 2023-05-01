@@ -9,5 +9,5 @@ import (
 type OrderUseCase interface {
 	CreateOrder(ctx context.Context, order domain.RecOrder) (string, error)
 	UpdateOrder(ctx context.Context, orderid, status string) (string, error)
-	FetchOrder(ctx context.Context, userid int) ([]domain.RecOrder, error)
+	FetchOrder(ctx context.Context, userid int,filter domain.Filter) ([]domain.RecOrder, error)
 }

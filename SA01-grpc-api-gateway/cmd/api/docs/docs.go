@@ -31,6 +31,38 @@ const docTemplate = `{
                 ],
                 "summary": "Fetch Order",
                 "operationId": "Fetchorder",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Status : ",
+                        "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Min Total : ",
+                        "name": "mintotal",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Max Total : ",
+                        "name": "maxtolat",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort By : ",
+                        "name": "sortby",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort Order : ",
+                        "name": "sortorder",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
