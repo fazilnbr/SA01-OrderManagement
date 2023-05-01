@@ -10,9 +10,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @title Go + Gin Workey API
+// @title Go + Gin Seller App Order Management Sytem
 // @version 1.0
-// @description This is a sample server Job Portal server. You can visit the GitHub repository at https://github.com/fazilnbr/Job_Portal_Project
+// @description This is a sample Order Management Sytem. You can visit the GitHub repository at https://github.com/fazilnbr/SA01-OrderManagement
 
 // @contact.name API Support
 // @contact.url https://fazilnbr.github.io/mypeosolal.web.portfolio/
