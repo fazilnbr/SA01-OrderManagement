@@ -2,6 +2,8 @@ package usecase
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"strings"
 
 	"github.com/fazilnbr/SA01-OrderManagement/SA01-grpc-order-svc/pkg/domain"
@@ -54,6 +56,10 @@ func (o *orderUseCase) UpdateOrder(ctx context.Context, orderid string, status s
 // CreateOrder implements interfaces.OrderUseCase
 func (o *orderUseCase) CreateOrder(ctx context.Context, order domain.RecOrder) (string, error) {
 	items := order.Item
+	fmt.Println(len(items))
+	if len(items) == 0 {
+		return "", errors.New("there no item in order")
+	}
 
 	var it []string
 	for _, item := range items {

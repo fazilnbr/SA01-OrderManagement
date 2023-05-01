@@ -55,3 +55,7 @@ protogen:
 	export GOPATH=$HOME/go
 	export GOBIN=$GOPATH/bin
 	export PATH=$PATH:$GOROOT:$GOPATH:$GOBIN
+
+mockgen: ## Generate mock repocitory and usecase functions 
+	mockgen -source=pkg/repository/interface/orderRepoInterface.go -destination=pkg/mock/repoMock/orderRepoMock.go -package=mock
+	mockgen -source=pkg/usecase/interface/orderUsecaseInterface.go -destination=pkg/mock/usecaseMock/orderUsecaseMock.go -package=mock
