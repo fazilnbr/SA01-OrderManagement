@@ -54,8 +54,17 @@ message UpdateOrderResponse {
 // FetchOrder
 
 message FetchOrderRequest {
-  int64 userId =1 ;
+  int64 userId  =1 ;
+  string Status = 2;
+  float MinTotal = 3;
+  float MaxTotal = 4;
+  string SortBy = 5;
+  string SortOrder = 6;
 }
+
+
+
+
 
 message FetchOrderResponse {
   int32 status = 1;

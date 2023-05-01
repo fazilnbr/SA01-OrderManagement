@@ -31,7 +31,12 @@ func FetchOrder(ctx *gin.Context, c pb.OrderServiceClient) {
 	}
 
 	res, err := c.FetchOrder(ctx, &pb.FetchOrderRequest{
-		UserId: int64(id),
+		UserId:    int64(id),
+		Status:    body.Status,
+		MinTotal:  float32(body.MinTotal),
+		MaxTotal:  float32(body.MaxTotal),
+		SortBy:    body.SortBy,
+		SortOrder: body.SortOrder,
 	})
 
 	if err != nil {

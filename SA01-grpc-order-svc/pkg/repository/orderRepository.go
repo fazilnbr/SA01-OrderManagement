@@ -14,7 +14,7 @@ type orderDatabase struct {
 }
 
 // FetchItem implements interfaces.OrderRepository
-func (o *orderDatabase) FetchItem(ctx context.Context, itemid string) (domain.Item, error) {
+func (o *orderDatabase) FetchItem(ctx context.Context, itemid string,filter domain.Filter) (domain.Item, error) {
 	item := domain.Item{}
 	err := o.DB.Where("id = ?", itemid).First(&item).Error
 
