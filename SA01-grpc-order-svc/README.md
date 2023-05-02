@@ -16,6 +16,7 @@ https://github.com/fazilnbr/SA01-OrderManagement/tree/main/SA01-grpc-api-gateway
 
 ```bash
 $ make proto
+$ make mockgen
 ```
 
 ## Running the app
